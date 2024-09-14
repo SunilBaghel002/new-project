@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            color: white;
+        }
+
+        button,
+        input[type=range] {
+            margin: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+        button:hover,
+        input[type=range]:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="solarSystem"></canvas>
+
+    <div id="ui">
+        <button id="pauseResumeButton">Pause</button>
+        <button id="resetButton">Reset</button>
+        <label>Speed: <span id="speedLabel">1x</span></label>
+        <input type="range" id="speedSlider" min="1" max="20" step="1" value="1">
+    </div>
+
+    <script>
+        const canvas = document.getElementById('solarSystem');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        const G = Math.PI / 180;  // Degrees to radians conversion factor
+        const AU = 100;  // Arbitrary unit for astronomical distances (scaled to fit the screen)
+
+        // Planet data: [radius in AU, orbital period in days, planet color]
+        const planets = [
+            { name: 'Mercury', radius: 0.39 * AU, period: 88, color: '#a5a5a5', size: 3 },
+            { name: 'Venus', radius: 0.72 * AU, period: 225, color: '#ffffcc', size: 6 },
+            { name: 'Earth', radius: 1.00 * AU, period: 365, color: '#0000ff', size: 6 },
+            { name: 'Mars', radius: 1.52 * AU, period: 687, color: '#ff4500', size: 4 },
+            { name: 'Jupiter', radius: 5.20 * AU, period: 4332, color: '#ffd700', size: 12 },
+            { name: 'Saturn', radius: 9.58 * AU, period: 10585, color: '#d2b48c', size: 10 },
+            { name: 'Uranus', radius: 19.18 * AU, period: 30687, color: '#00ffff', size: 8 },
+            { name: 'Neptune', radius: 30.07 * AU, period: 60190, color: '#00008b', size: 8 }
+        ];
+
+        let running = true;
+        let simulationTime = 0;
+        let speedMultiplier = 1;
+
+        const pauseResumeButton = document.getElementById('pauseResumeButton');
+        const resetButton = document.getElementById('resetButton');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedLabel = document.getElementById('speedLabel');
+
+        // Button controls
+        pauseResumeButton.addEventListener('click', () => {
+            running = !running;
+            pauseResumeButton.textContent = running ? 'Pause' : 'Resume';
+        });
+
+        resetButton.addEventListener('click', () => {
+            simulationTime = 0; // Reset time to zero
+            if (!running) {
+                running = true;
+                pauseResumeButton.textContent = 'Pause';
+            }
+        });
+
+        speedSlider.addEventListener('input', () => {
+            speedMultiplier = speedSlider.value;
+            speedLabel.textContent = `${speedMultiplier}x`;
+        });
+
+        function drawSun() {
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, 40, 0, 2 * Math.PI);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+            ctx.strokeStyle = 'orange';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+        }
+
+        function drawPlanet(planet, time) {
+            const angle = (2 * Math.PI * time) / planet.period;  // Adjust the angle based on time and period
+            const x = width / 2 + planet.radius * Math.cos(angle);
+            const y = height / 2 + planet.radius * Math.sin(angle);
+
+            // Draw the planet
+            ctx.beginPath();
+            ctx.arc(x, y, planet.size, 0, 2 * Math.PI);  // Adjust size for visibility
+            ctx.fillStyle = planet.color;
+            ctx.fill();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw sun
+            drawSun();
+
+            if (running) {
+                simulationTime += 1 * speedMultiplier;  // Time progression
+            }
+
+            // Draw planets
+            for (const planet of planets) {
+                drawPlanet(planet, simulationTime);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>

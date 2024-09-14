@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Arrow Slider Content</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .arrow-slider {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .content-container {
+            position: relative;
+            width: 80%;
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: lightblue;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="arrow-slider left-arrow">&#10094;</div>
+        <div class="content-container">
+            <div class="content hidden">Content 1</div>
+            <div class="content hidden">Content 2</div>
+        </div>
+        <div class="arrow-slider right-arrow">&#10095;</div>
+    </div>
+
+    <script>
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        const contentContainers = document.querySelectorAll('.content-container .content');
+
+        let currentContentIndex = 0;
+
+        leftArrow.addEventListener('click', () => {
+            currentContentIndex = (currentContentIndex - 1 + contentContainers.length) % contentContainers.length;
+            updateContentVisibility();
+        });
+
+        rightArrow.addEventListener('click', () => {
+            currentContentIndex = (currentContentIndex + 1) % contentContainers.length;
+            updateContentVisibility();
+        });
+
+        function updateContentVisibility() {
+            contentContainers.forEach((content, index) => {
+                content.classList.toggle('hidden', index !== currentContentIndex);
+            });
+        }
+    </script>
+</body>
+
+</html>

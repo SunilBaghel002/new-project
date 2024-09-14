@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            font-family: 'Arial', sans-serif;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            background: radial-gradient(circle, rgba(0, 0, 30, 1) 0%, rgba(0, 0, 0, 1) 100%);
+            top: 0;
+            left: 0;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            color: white;
+        }
+
+        .slider {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider input {
+            width: 200px;
+        }
+
+        .theme-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00aaff;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #0088cc;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="solarSystemCanvas"></canvas>
+
+    <div class="controls">
+        <div class="slider">
+            <label for="speedSlider" class="theme-text">Speed: </label><br>
+            <input type="range" id="speedSlider" min="1" max="5" step="0.1" value="1">
+            <span id="speedValue">1x</span>
+        </div>
+        <button id="pauseResumeBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('solarSystemCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        const planets = [
+            { name: 'Mercury', radius: 5, orbitRadius: 60, orbitSpeed: 4.15, color: '#9e9e9e' },
+            { name: 'Venus', radius: 9, orbitRadius: 90, orbitSpeed: 1.62, color: '#d1a354' },
+            { name: 'Earth', radius: 10, orbitRadius: 120, orbitSpeed: 1, color: '#4b81f4' },
+            { name: 'Mars', radius: 8, orbitRadius: 160, orbitSpeed: 0.53, color: '#db4d3f' },
+            { name: 'Jupiter', radius: 20, orbitRadius: 220, orbitSpeed: 0.08, color: '#f2b43f' },
+            { name: 'Saturn', radius: 18, orbitRadius: 280, orbitSpeed: 0.03, color: '#e0b85e' },
+            { name: 'Uranus', radius: 15, orbitRadius: 340, orbitSpeed: 0.01, color: '#68d2e6' },
+            { name: 'Neptune', radius: 14, orbitRadius: 400, orbitSpeed: 0.006, color: '#4561c3' }
+        ];
+
+        let time = 0;
+        let paused = false;
+        let speedMultiplier = 1;
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
+
+        // Function to draw the solar system
+        function drawSolarSystem() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Sun
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = '#f5c242';
+            ctx.fill();
+
+            // Draw planets
+            planets.forEach(planet => {
+                const angle = (time * planet.orbitSpeed * speedMultiplier) % (2 * Math.PI);
+                const x = width / 2 + Math.cos(angle) * planet.orbitRadius;
+                const y = height / 2 + Math.sin(angle) * planet.orbitRadius;
+
+                // Draw planet orbit
+                ctx.beginPath();
+                ctx.arc(width / 2, height / 2, planet.orbitRadius, 0, 2 * Math.PI);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.stroke();
+
+                // Draw planet
+                ctx.beginPath();
+                ctx.arc(x, y, planet.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+            });
+
+            if (!paused) {
+                time += 0.02;
+            }
+
+            requestAnimationFrame(drawSolarSystem);
+        }
+
+        // Start drawing
+        drawSolarSystem();
+
+        // Speed slider functionality
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        speedSlider.addEventListener('input', () => {
+            speedMultiplier = speedSlider.value;
+            speedValue.textContent = `${speedMultiplier}x`;
+        });
+
+        // Pause/Resume button functionality
+        const pauseResumeBtn = document.getElementById('pauseResumeBtn');
+        pauseResumeBtn.addEventListener('click', () => {
+            paused = !paused;
+            pauseResumeBtn.textContent = paused ? 'Resume' : 'Pause';
+        });
+
+        // Reset button functionality
+        const resetBtn = document.getElementById('resetBtn');
+        resetBtn.addEventListener('click', () => {
+            time = 0; // Reset the time variable to start the simulation over
+            paused = false; // Resume the simulation if paused
+            pauseResumeBtn.textContent = 'Pause'; // Reset the button text to "Pause"
+        });
+    </script>
+</body>
+
+</html>

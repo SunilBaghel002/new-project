@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.container{
+    width: 800px;
+height: 500px;
+border: 2px solid black;
+display: flex ;
+align-items: center;
+justify-content: center;
+gap: 30px;
+
+}
+.box{
+    width: 100px;
+    height: 120px;
+    border: 2px solid black;
+    /* animation: ? duration timing-function delay iteration-count direction fill-mode; */
+    animation: hello 3s ease-in-out 1s infinite ;
+
+}
+.box1{
+    width: 100px;
+    height: 120px;
+    border: 2px solid black;
+    /* animation: hello 3s ease-in-out 1s infinite , hello2 3s ease-in-out 1s infinite ; */
+    animation-name: hello,hello2;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+
+}
+@keyframes hello{
+    to{
+        transform: translateX(300px);
+        background-color: red;
+    }
+}
+@keyframes hello2{
+    0%{
+        transform: rotate(100deg);
+    }
+    30%{
+        transform: rotate(200deg);
+    }
+    70%{
+        transform: rotate(270deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="box"></div>
+    <div class="box1"></div>
+    </div>
+
+</body>
+</html>

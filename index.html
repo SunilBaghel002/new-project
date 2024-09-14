@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>double</title>
+    <style>
+        .earth {
+            width: 500px;
+            height: 500px;
+            background-color: blue;
+            position: relative;
+            left: 200px;
+            border: 1px soild black;
+            border-radius: 50%;
+            transform: skew(30deg);
+            animation: spin-right 8s linear infinite;
+        }
+
+        .planet {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: relative;
+            left: 50px;
+            top: 40px;
+            background-color: black;
+            transform: skew(-30deg);
+        }
+
+        @keyframes spin-right {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="planet-info">
+        <div class="planet-image">
+            <img src="" alt="">
+            <h2>EARTH</h2>
+        </div>
+        <div class="encyclopedia"></div>
+        <div class="structure"></div>
+    </div>
+    <div class="earth">
+        <div class="planet"></div>
+    </div>
+</body>
+
+</html>

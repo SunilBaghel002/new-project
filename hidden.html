@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .arrow {
+            width: 200px;
+            height: 100px;
+            background-color: antiquewhite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row-reverse;
+            position: relative;
+            top: 200px;
+            left: -150px;
+        }
+
+        .left {
+            margin-left: 10px;
+            background-color: cadetblue;
+            padding: 4px;
+        }
+
+        .content {
+            width: 150px;
+            height: 50px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="arrow">
+        <div class="left">&#8594</div>
+        <div class="content">
+            <p>This is content box</p>
+        </div>
+    </div>
+    <script>
+        let left = document.querySelector(".left")
+        left.style.backgroundColor = "green"
+        left.addEventListener("click", () => {
+            if (left.style.left === '-150px') {
+                left.style.left = '0';
+            } else {
+                left.style.left = '-150px';
+            }
+        })
+    </script>
+</body>
+
+</html>

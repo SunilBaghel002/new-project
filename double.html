@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        .left-arrow,
+        .right-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+
+        .content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-arrow" onclick="toggleContent('left')">&#10096;</div>
+        <div class="content">
+            <p>This is the hidden content that will appear or disappear when you click on the arrows.</p>
+        </div>
+        <div class="right-arrow" onclick="toggleContent('right')">&#10097;</div>
+    </div>
+    <script>
+        function toggleContent(direction) {
+            const content = document.querySelector('.content');
+            if (direction === 'left') {
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            } else if (direction === 'right') {
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Orbit Control</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        #solarSystem {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background-color: yellow;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 50px yellow;
+        }
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+        }
+        .earth {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            animation: rotate 10s linear infinite;
+        }
+        .mars {
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            animation: rotate 20s linear infinite;
+        }
+        .orbit.earth-orbit {
+            width: 300px;
+            height: 300px;
+        }
+        .orbit.mars-orbit {
+            width: 400px;
+            height: 400px;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        .speed-display {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        .pause-btn, .resume-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            border: 1px solid #fff;
+            cursor: pointer;
+        }
+        .pause-btn:hover, .resume-btn:hover {
+            background-color: #555;
+        }
+        #speedSlider {
+            margin-left: 10px;
+        }
+
+        /* Space-themed design */
+        body {
+            background: radial-gradient(circle, rgba(0, 0, 30, 1) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg) translateX(150px); }
+            100% { transform: rotate(360deg) translateX(150px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="solarSystem">
+        <div class="sun"></div>
+
+        <div class="orbit earth-orbit">
+            <div class="planet earth"></div>
+        </div>
+        <div class="orbit mars-orbit">
+            <div class="planet mars"></div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <label for="speedSlider">Speed:</label>
+        <input type="range" id="speedSlider" min="1" max="5" value="1">
+        <span class="speed-display" id="speedDisplay">1x</span>
+        <button class="pause-btn" id="pauseBtn">Pause</button>
+        <button class="resume-btn" id="resumeBtn">Resume</button>
+    </div>
+
+    <script>
+        let earthOrbit = document.querySelector('.earth');
+        let marsOrbit = document.querySelector('.mars');
+        let speedSlider = document.getElementById('speedSlider');
+        let speedDisplay = document.getElementById('speedDisplay');
+        let pauseBtn = document.getElementById('pauseBtn');
+        let resumeBtn = document.getElementById('resumeBtn');
+        let currentSpeed = 1;
+        let isPaused = false;
+
+        // Function to update speed of rotation
+        function updateSpeed() {
+            currentSpeed = speedSlider.value;
+            earthOrbit.style.animationDuration = `${10 / currentSpeed}s`;
+            marsOrbit.style.animationDuration = `${20 / currentSpeed}s`;
+            speedDisplay.textContent = `${currentSpeed}x`;
+        }
+
+        // Pause/Resume functionality
+        pauseBtn.addEventListener('click', () => {
+            isPaused = true;
+            earthOrbit.style.animationPlayState = 'paused';
+            marsOrbit.style.animationPlayState = 'paused';
+        });
+
+        resumeBtn.addEventListener('click', () => {
+            isPaused = false;
+            earthOrbit.style.animationPlayState = 'running';
+            marsOrbit.style.animationPlayState = 'running';
+        });
+
+        // Slider change event
+        speedSlider.addEventListener('input', updateSpeed);
+
+        // Initialize
+        updateSpeed();
+    </script>
+</body>
+</html>

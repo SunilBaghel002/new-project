@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Solar System Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            z-index: 100;
+        }
+
+        .slider {
+            margin-bottom: 10px;
+        }
+
+        .slider input {
+            width: 200px;
+        }
+
+        .slider label {
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="solarSystemCanvas"></canvas>
+
+    <div class="controls">
+        <div class="slider">
+            <label for="speedSlider">Speed: <span id="speedValue">1x</span></label><br>
+            <input type="range" id="speedSlider" min="0.1" max="5" step="0.1" value="1">
+        </div>
+        <button id="pauseResumeBtn">Pause</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('solarSystemCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        // Planets with improved sizes, orbit radius, and speed
+        const planets = [
+            { name: 'Mercury', radius: 3, orbitRadius: 60, orbitSpeed: 4.79 },
+            { name: 'Venus', radius: 6, orbitRadius: 100, orbitSpeed: 3.5 },
+            { name: 'Earth', radius: 7, orbitRadius: 140, orbitSpeed: 2.98 },
+            { name: 'Mars', radius: 4, orbitRadius: 180, orbitSpeed: 2.41 },
+            { name: 'Jupiter', radius: 15, orbitRadius: 220, orbitSpeed: 1.31 },
+            { name: 'Saturn', radius: 13, orbitRadius: 260, orbitSpeed: 0.97 },
+            { name: 'Uranus', radius: 10, orbitRadius: 300, orbitSpeed: 0.68 },
+            { name: 'Neptune', radius: 9, orbitRadius: 340, orbitSpeed: 0.54 }
+        ];
+
+        let time = 0;
+        let paused = false;
+        let speedMultiplier = 1;
+
+        // Resize canvas when window size changes
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
+
+        // Function to draw planets
+        function drawSolarSystem() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the Sun
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.beginPath();
+            ctx.arc(0, 0, 20, 0, 2 * Math.PI);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+            ctx.restore();
+
+            // Draw planets and their orbits
+            planets.forEach(planet => {
+                const angle = (time * planet.orbitSpeed * speedMultiplier) % (2 * Math.PI);
+                const x = width / 2 + Math.cos(angle) * planet.orbitRadius;
+                const y = height / 2 + Math.sin(angle) * planet.orbitRadius;
+
+                // Draw orbit path
+                ctx.beginPath();
+                ctx.arc(width / 2, height / 2, planet.orbitRadius, 0, 2 * Math.PI);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.stroke();
+
+                // Draw the planet
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                ctx.arc(0, 0, planet.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.restore();
+            });
+
+            if (!paused) {
+                time += 0.02;
+            }
+
+            requestAnimationFrame(drawSolarSystem);
+        }
+
+        // Start drawing
+        drawSolarSystem();
+
+        // Speed slider functionality
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        speedSlider.addEventListener('input', () => {
+            speedMultiplier = speedSlider.value;
+            speedValue.textContent = `${speedMultiplier}x`;
+        });
+
+        // Pause/Resume button functionality
+        const pauseResumeBtn = document.getElementById('pauseResumeBtn');
+        pauseResumeBtn.addEventListener('click', () => {
+            paused = !paused;
+            pauseResumeBtn.textContent = paused ? 'Resume' : 'Pause';
+        });
+    </script>
+</body>
+
+</html>

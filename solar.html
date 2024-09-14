@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .solar-system {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .sun {
+            position: absolute;
+            background-color: yellow;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .planet {
+            position: absolute;
+            background-color: #888;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+        }
+
+        #planet1 {
+            background-color: blue;
+            width: 20px;
+            height: 20px;
+        }
+
+        #planet2 {
+            background-color: red;
+            width: 25px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="solar-system">
+        <div class="sun"></div>
+        <div class="planet" id="planet1"></div>
+        <div class="planet" id="planet2"></div>
+    </div>
+    <script>
+        const planet1 = document.getElementById('planet1');
+        const planet2 = document.getElementById('planet2');
+
+        const orbitRadius1 = 150;
+        const orbitRadius2 = 250;
+        const speed1 = 0.02;
+        const speed2 = 0.01;
+
+        function animate() {
+            const now = Date.now();
+            const angle1 = now * speed1 % (2 * Math.PI);
+            const angle2 = now * speed2 % (2 * Math.PI);
+
+            planet1.style.left = `${50 + orbitRadius1 * Math.cos(angle1)}%`;
+            planet1.style.top = `${50 + orbitRadius1 * Math.sin(angle1)}%`;
+
+            planet2.style.left = `${50 + orbitRadius2 * Math.cos(angle2)}%`;
+            planet2.style.top = `${50 + orbitRadius2 * Math.sin(angle2)}%`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    </script>
+</body>
+
+</html>

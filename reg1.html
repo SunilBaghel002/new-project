@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Orbit Control</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #solarSystem {
+            position: relative;
+            width: 800px;
+            height: 800px;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background-color: yellow;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px yellow;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        /* Orbits */
+        .orbit-mercury {
+            width: 120px;
+            height: 120px;
+            top: 43%;
+            left: 43%;
+        }
+
+        .orbit-venus {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-earth {
+            width: 280px;
+            height: 280px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-mars {
+            width: 360px;
+            height: 360px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-jupiter {
+            width: 440px;
+            height: 440px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-saturn {
+            width: 520px;
+            height: 520px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-uranus {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orbit-neptune {
+            width: 680px;
+            height: 680px;
+            top: 50%;
+            left: 50%;
+        }
+
+        /* Planets */
+        .planet-mercury {
+            width: 8px;
+            height: 8px;
+            background-color: gray;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-venus {
+            width: 12px;
+            height: 12px;
+            background-color: #d4af37;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-earth {
+            width: 14px;
+            height: 14px;
+            background-color: blue;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-mars {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-jupiter {
+            width: 30px;
+            height: 30px;
+            background-color: orange;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-saturn {
+            width: 25px;
+            height: 25px;
+            background-color: lightgoldenrodyellow;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-uranus {
+            width: 22px;
+            height: 22px;
+            background-color: lightblue;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-neptune {
+            width: 20px;
+            height: 20px;
+            background-color: darkblue;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .speed-display {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .pause-btn,
+        .resume-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            border: 1px solid #fff;
+            cursor: pointer;
+        }
+
+        .pause-btn:hover,
+        .resume-btn:hover {
+            background-color: #555;
+        }
+
+        #speedSlider {
+            margin-left: 10px;
+        }
+
+        /* Keyframes for orbiting */
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="solarSystem">
+        <div class="sun"></div>
+
+        <!-- Orbits and Planets -->
+        <div class="orbit orbit-mercury">
+            <div class="planet planet-mercury"></div>
+        </div>
+        <div class="orbit orbit-venus">
+            <div class="planet planet-venus"></div>
+        </div>
+        <div class="orbit orbit-earth">
+            <div class="planet planet-earth"></div>
+        </div>
+        <div class="orbit orbit-mars">
+            <div class="planet planet-mars"></div>
+        </div>
+        <div class="orbit orbit-jupiter">
+            <div class="planet planet-jupiter"></div>
+        </div>
+        <div class="orbit orbit-saturn">
+            <div class="planet planet-saturn"></div>
+        </div>
+        <div class="orbit orbit-uranus">
+            <div class="planet planet-uranus"></div>
+        </div>
+        <div class="orbit orbit-neptune">
+            <div class="planet planet-neptune"></div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <label for="speedSlider">Speed:</label>
+        <input type="range" id="speedSlider" min="1" max="10" value="1">
+        <span class="speed-display" id="speedDisplay">1x</span>
+        <button class="pause-btn" id="pauseBtn">Pause</button>
+        <button class="resume-btn" id="resumeBtn">Resume</button>
+    </div>
+
+    <script>
+        const orbits = document.querySelectorAll('.orbit');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedDisplay = document.getElementById('speedDisplay');
+        let currentSpeed = 1;
+
+        // Function to apply orbit speeds
+        function applyOrbitSpeeds() {
+            orbits.forEach(orbit => {
+                const baseDuration = parseInt(getComputedStyle(orbit).width, 10) * 0.05; // Base duration based on orbit size
+                orbit.style.animation = `orbit ${baseDuration / currentSpeed}s linear infinite`;
+            });
+            speedDisplay.textContent = `${currentSpeed}x`;
+        }
+
+        // Event listeners for controls
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            orbits.forEach(orbit => orbit.style.animationPlayState = 'paused');
+        });
+
+        document.getElementById('resumeBtn').addEventListener('click', () => {
+            orbits.forEach(orbit => orbit.style.animationPlayState = 'running');
+        });
+
+        speedSlider.addEventListener('input', () => {
+            currentSpeed = parseInt(speedSlider.value, 10);
+            applyOrbitSpeeds();
+        });
+
+        applyOrbitSpeeds(); // Initialize orbit speeds
+    </script>
+
+</body>
+
+</html>

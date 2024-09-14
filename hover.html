@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Image Hover Reveal</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        .image {
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .paragraph {
+            position: relative;
+            top: 50vh;
+            left: 49px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+        }
+        
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(214, 131, 21);
+            border-radius: 50%;
+            /* animation: move 2s ease 0s infinite linear; */
+            animation-name: move;
+            animation-duration: 2s;
+            /* animation-timing-function: ease; */
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        @keyframes move{
+            100%{
+                transform: rotateY(360deg); 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="solar.png" alt="Image" class="image">
+        <p class="paragraph hidden">This paragraph will appear when you hover over the image.</p>
+    </div>
+    <div class="box"></div>
+
+    <script>
+        const image = document.querySelector('.image');
+        const paragraph = document.querySelector('.paragraph');
+
+        image.addEventListener('mouseover', () => {
+            paragraph.classList.remove('hidden');
+        });
+
+        image.addEventListener('mouseout', () => {
+            paragraph.classList.add('hidden');
+        });
+    </script>
+</body>
+
+</html>

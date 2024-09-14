@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retry</title>
+    <link rel="stylesheet" href="retry.css">
+</head>
+
+<body>
+    <div class="space">
+        <div id="message">
+            <p>Click on Celestial object to get info about them</p>
+        </div>
+        <div class="controls">
+            <label for="speedSlider">Rotation Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="20" value="1">
+            <span class="speed-display" id="speedDisplay">1x</span> <!-- Speed display -->
+            <button id="pauseBtn">Pause</button>
+            <button id="resumeBtn">Resume</button>
+        </div>
+        <div class="time">
+            <div id="timeDisplay"></div>
+            <div class="text">
+                <p>Days on</p>
+                <p>Earth</p>
+            </div>
+        </div>
+        <div class="time time2"></div>
+        <div class="sun"></div>
+        <div class="circle1 mercury-orbit">
+            <!-- <div class="write">
+                <p>Mercury</p>
+                <p>|</p> 
+            </div>-->
+            <div class="mercury"></div>
+        </div>
+        <div class="circle2 venus-orbit">
+            <div class="venus"></div>
+        </div>
+        <div class="circle3 earth-orbit">
+            <div class="earth" ></div>
+            <div class="earth-orbit2">
+                <div class="moon"></div>
+            </div>
+        </div>
+        <div class="circle4 mars-orbit">
+            <div class="mars" ></div>
+            <div class="mars-orbit2">
+                <div class="phobos"></div>
+                <div class="demobos"></div>
+            </div>
+        </div>
+        <div class="circle5 jupiter-orbit">
+            <div class="jupiter"></div>
+            <div class="jupiter-orbit4">
+                <div class="callisto"></div>
+            </div>
+            <div class="jupiter-orbit3">
+                <div class="ganymede"></div>
+            </div>
+            <div class="jupiter-orbit1">
+                <div class="io"></div>
+            </div>
+            <div class="jupiter-orbit2">
+                <div class="europa"></div>
+            </div>
+        </div>
+        <div class="circle6 saturn-orbit">
+            <div class="saturn"></div>
+            <div class="ring1"></div>
+            <div class="ring2"></div>
+            <div class="saturn-orbit1">
+                <div class="enceladus"></div>
+            </div>
+            <div class="saturn-orbit2">
+                <div class="tethys"></div>
+            </div>
+            <div class="saturn-orbit3">
+                <div class="titan"></div>
+            </div>
+        </div>
+        <div class="circle7 uranus-orbit">
+            <div class="uranus"></div>
+            <div class="uranus-ring"></div>
+        </div>
+        <div class="circle8 neptune-orbit">
+            <div class="neptune"></div>
+        </div>
+    </div>
+    <script src="time.js"></script>
+</body>
+
+</html>

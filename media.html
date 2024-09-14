@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>media</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(201, 186, 186);
+        }
+
+        .container {
+            width: 95vw;
+            height: 95vh;
+            box-shadow: 0px 0px 20px black;
+            background-color: white;
+
+        }
+        .write{
+            margin: auto;
+            color: green;
+            /* background-color: antiquewhite; */
+            max-width: fit-content;
+            margin-top: 20px;
+        }
+        .kit{
+            width: 98%;
+            /* background-color: aqua; */
+            max-height: fit-content;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .box{
+            width: 435px;
+            height: 20vh;
+            background-color: rgb(163, 179, 209);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            color: rgb(5, 82, 247);
+        }
+        .box2{
+            background-color: rgb(151, 143, 143);
+        }
+        .box3{
+            background-color: rgb(56, 68, 80);
+        }
+        .box4{
+            background-color: rgb(122, 179, 226);
+        }
+        h3,h4{
+            background-color: white;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        @media only screen and (max-width: 1800px){
+            .kit{
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               grid-template-rows: 1fr 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body">
+        <div class="container">
+            <div class="write">
+                <h2>Media Query for Columns-Increase or decrease the screen size to see the changes</h2>
+            </div>
+            <div class="kit">
+                <div class="box box1">
+                    <h3>Name1</h3>
+                    <h4>I am Creator</h4>
+                </div>
+                <div class="box box2">
+                    <h3>Name2</h3>
+                    <h4>I am Destroyer</h4>
+                </div>
+                <div class="box box3">
+                    <h3>Name3</h3>
+                    <h4>I am Shiv</h4>
+                </div>
+                <div class="box box4">
+                    <h3>Bam-Bam Bhole</h3>
+                    <h4>Jai baba ki!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

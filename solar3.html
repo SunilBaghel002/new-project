@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System with Controls</title>
+    <style>
+        /* Your existing styles here */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .space {
+            width: 100vw;
+            height: 100vh;
+            /* background-color: black; */
+            background: radial-gradient(circle, rgba(0, 0, 30, 1) 0%, rgba(0, 0, 0, 1) 100%);
+            position: absolute;
+            overflow: hidden;
+
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+        }
+
+        .speed-display {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        /* Add styles for new buttons */
+        button {
+            margin-left: 10px;
+        }
+
+        #message {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 30px;
+            font-weight: 700;
+            font-family: Audiowide;
+            transform: translate(-50%, -50%);
+            background-color: #111010;
+            color: #e4d7d7;
+            padding: 10px 20px;
+            /* border: 1px solid #ccc; */
+            border-radius: 5px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .time {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            background-color: rgb(49, 47, 47);
+            color: white;
+            position: relative;
+            /* bottom: 0; */
+            top: 90vh;
+            left: 45vw;
+            /* border: 1px solid white; */
+        }
+
+        #timeDisplay {
+            width: 37px;
+            height: 37px;
+            /* text-align: center; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: rgb(212, 221, 221);
+            font-family: Audiowide;
+            font-weight: 800;
+            color: black;
+        }
+
+        .time2 {
+            /* background-color: rgb(129, 107, 150); */
+            position: absolute;
+            z-index: -1;
+            background-color: rgb(158, 149, 149);
+            opacity: 0.5;
+        }
+
+        .text {
+            display: flex;
+            font-family: Audiowide;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .sun {
+            width: 47px;
+            height: 47px;
+            position: relative;
+            background-color: orange;
+            border-radius: 50%;
+            top: 600px;
+            left: 1500px;
+            z-index: 12;
+            animation: solar 10s linear infinite alternate;
+        }
+
+        .circle1 {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            /* background-color: antiquewhite; */
+            border-radius: 50%;
+            top: 535px;
+            left: 1485px;
+            border: 0.1px solid white;
+            z-index: 11;
+            animation: spin-right 88s linear infinite;
+        }
+
+        .mercury {
+            width: 10px;
+            height: 10px;
+            background-color: gray;
+            border-radius: 50%;
+            position: relative;
+            top: 15px;
+            /* right: px; */
+        }
+
+        .write {
+            color: white;
+            max-width: fit-content;
+            position: relative;
+            /* background-color: rgb(216, 126, 8); */
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0px;
+            /* mix-blend-mode: color; */
+            /* mix-blend-mode: difference; */
+        }
+
+        .write p:first-child {
+            background-color: rgb(35, 13, 224);
+            border-radius: 5px;
+            padding: 2px;
+            font-size: 10px;
+            position: relative;
+        }
+
+        .write p:last-child {
+            position: relative;
+            top: -1px;
+            background-color: rgb(46, 13, 235);
+            color: rgb(35, 13, 235);
+            font-weight: 900;
+            font-size: 10px;
+            border-bottom-left-radius: 5px;
+            padding-bottom: 2px;
+            border-bottom-right-radius: 2px;
+
+        }
+
+        .circle2 {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid rgb(145, 188, 202);
+            top: 435px;
+            left: 1465px;
+            z-index: 10;
+            animation: spin-right 225s linear infinite;
+        }
+
+        .venus {
+            width: 15px;
+            height: 15px;
+            background-color: rgb(233, 106, 22);
+            border-radius: 50%;
+            position: relative;
+            top: 23px;
+            animation: spin-right 243s linear infinite;
+        }
+
+        .circle3 {
+            width: 175px;
+            height: 175px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid rgb(145, 188, 202);
+            /* background-color: rgb(226, 137, 20); */
+            z-index: 9;
+            top: 286px;
+            left: 1439px;
+            animation: spin-right 365s linear infinite;
+        }
+
+        .earth {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(42, 42, 226);
+            top: 42px;
+            z-index: 10;
+        }
+
+        .earth-orbit2 {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: rgb(30, 197, 66); */
+            top: 18.5px;
+            right: 7px;
+            animation: spin-right 27s linear infinite;
+        }
+
+        .moon {
+            width: 8px;
+            height: 8px;
+            background-color: rgb(146, 140, 140);
+            position: relative;
+            border-radius: 50%;
+            top: 1px;
+        }
+
+        .circle4 {
+            width: 240px;
+            height: 240px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid rgb(145, 188, 202);
+            /* background-color: rgb(226, 137, 20); */
+            z-index: 8;
+            left: 1405px;
+            top: 80px;
+            animation: spin-right 600s linear infinite;
+        }
+
+        .mars {
+            width: 14px;
+            height: 14px;
+            position: relative;
+            border-radius: 50%;
+            background-color: red;
+            z-index: 9;
+            top: 60px;
+            left: 5px;
+        }
+
+        .mars-orbit2 {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: rgb(30, 197, 66); */
+            top: 38px;
+            right: 3px;
+            z-index: 8;
+            animation: spin-right 27s linear infinite;
+        }
+
+        .phobos {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            position: relative;
+            background-color: rgb(173, 164, 164);
+            top: 20px;
+            left: 6px;
+        }
+
+        .demobos {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            position: relative;
+            background-color: rgb(173, 164, 164);
+            left: 10px;
+            top: -2px;
+        }
+
+        .circle5 {
+            width: 390px;
+            height: 390px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid rgb(145, 188, 202);
+            /* background-color: rgb(20, 34, 226); */
+            z-index: 7;
+            bottom: 230px;
+            left: 1330px;
+            animation: spin-right 4343s linear infinite;
+        }
+
+        .jupiter {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(214, 154, 76);
+            z-index: 11;
+            top: 100px;
+            left: 2px;
+        }
+
+        .jupiter-orbit4 {
+            width: 80px;
+            height: 80px;
+            /* background-color: aquamarine; */
+            position: relative;
+            border-radius: 50%;
+            z-index: 7;
+            top: 44px;
+            right: 22px;
+            animation: spin-right 16.7s linear infinite;
+        }
+
+        .jupiter-orbit1 {
+            width: 50px;
+            height: 50px;
+            /* background-color: rgb(241, 112, 37); */
+            position: relative;
+            border-radius: 50%;
+            z-index: 10;
+            top: -95px;
+            right: 8px;
+            animation: spin-right 1.77s linear infinite;
+        }
+
+        .io {
+            width: 8px;
+            height: 8px;
+            position: relative;
+            border-radius: 50%;
+            background-color: goldenrod;
+            top: 8px;
+            left: 3px;
+        }
+
+        .jupiter-orbit2 {
+            width: 60px;
+            height: 60px;
+            /* background-color: rgb(37, 41, 241); */
+            position: relative;
+            border-radius: 50%;
+            z-index: 9;
+            top: -150px;
+            right: 13px;
+            animation: spin-right 3.6s linear infinite;
+        }
+
+        .europa {
+            width: 5px;
+            height: 5px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(243, 230, 154);
+            top: 40px;
+        }
+
+        .jupiter-orbit3 {
+            width: 75px;
+            height: 75px;
+            /* background-color: rgb(223, 14, 160); */
+            position: relative;
+            border-radius: 50%;
+            z-index: 8;
+            top: -33px;
+            right: 20px;
+            animation: spin-right 7.2s linear infinite;
+        }
+
+        .ganymede {
+            width: 11px;
+            height: 11px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(223, 182, 133);
+            top: 0px;
+            left: 50px;
+        }
+
+        .callisto {
+            width: 7px;
+            height: 7px;
+            background-color: rgb(161, 70, 54);
+            position: relative;
+            border-radius: 50%;
+            z-index: 12;
+            top: 85px;
+            left: 35px;
+        }
+
+        .circle6 {
+            width: 650px;
+            height: 650px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid rgb(145, 188, 202);
+            /* background-color: rgb(20, 34, 226); */
+            z-index: 6;
+            bottom: 750px;
+            left: 1200px;
+            animation: spin-right 10585s linear infinite;
+        }
+
+        .saturn {
+            width: 25px;
+            height: 25px;
+            position: relative;
+            border-radius: 50%;
+            background-color: blanchedalmond;
+            z-index: 10;
+            top: 220px;
+        }
+
+        .saturn-orbit1 {
+            width: 42px;
+            height: 42px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: aquamarine; */
+            z-index: 7;
+            top: 124px;
+            left: -8px;
+            animation: spin-right 1.37s linear infinite;
+        }
+
+        .enceladus {
+            width: 6px;
+            height: 6px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(216, 245, 235);
+            top: 30px;
+        }
+
+        .saturn-orbit2 {
+            width: 47px;
+            height: 47px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: blueviolet; */
+            z-index: 6;
+            top: 80px;
+            right: 11px;
+            animation: spin-right 1.89s linear infinite;
+
+        }
+
+        .tethys {
+            width: 8px;
+            height: 8px;
+            position: relative;
+            border-radius: 50%;
+            background-color: rgb(103, 105, 61);
+            /* z-index: 6; */
+            left: 29px;
+            top: -3px;
+        }
+
+        .saturn-orbit3 {
+            width: 55px;
+            height: 55px;
+        }
+
+        .ring1 {
+            width: 29px;
+            height: 29px;
+            position: relative;
+            border-radius: 50%;
+            z-index: 9;
+            border: 1px solid burlywood;
+            /* background-color: aliceblue; */
+            top: 192.5px;
+            right: 2.5px;
+        }
+
+        .ring2 {
+            width: 32.5px;
+            height: 32.5px;
+            position: relative;
+            border-radius: 50%;
+            z-index: 8;
+            border: 1px solid rgb(231, 145, 32);
+            /* background-color: aliceblue; */
+            top: 162.2px;
+            right: 3.8px;
+        }
+
+        .circle7 {
+            width: 1000px;
+            height: 1000px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: cadetblue; */
+            border: 1px solid rgb(145, 188, 202);
+            z-index: 5;
+            bottom: 1600px;
+            left: 1020px;
+        }
+
+        .uranus {
+            width: 20px;
+            height: 20px;
+            background-color: aliceblue;
+            position: relative;
+            border-radius: 50%;
+            z-index: 10;
+            top: 385px;
+        }
+
+        .uranus-ring {
+            width: 26px;
+            height: 26px;
+            /* background-color: brown; */
+            position: relative;
+            z-index: 9;
+            border-radius: 50%;
+            top: 362px;
+            left: -3px;
+            border: 1px solid lightcyan;
+        }
+
+        .circle8 {
+            width: 1500px;
+            height: 1500px;
+            position: relative;
+            border-radius: 50%;
+            /* background-color: cadetblue; */
+            border: 1px solid rgb(145, 188, 202);
+            z-index: 4;
+            bottom: 2850px;
+            left: 750px;
+        }
+
+        .neptune {
+            width: 22px;
+            height: 22px;
+            background-color: darkblue;
+            border-radius: 50%;
+            position: relative;
+            top: 607px;
+            z-index: 10;
+        }
+
+        #message.visible {
+            opacity: 1;
+        }
+
+        @keyframes spin-right {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="space">
+        <div id="message">
+            <p>Click on Celestial object to get info about them</p>
+        </div>
+        <div class="controls">
+            <label for="speedSlider">Rotation Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="1" step="0.1">
+            <span class="speed-display" id="speedDisplay">1x</span>
+            <button id="pauseBtn">Pause</button>
+            <button id="resumeBtn">Resume</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+        <div class="time">
+            <div id="timeDisplay"></div>
+            <div class="text">
+                <p>Days on</p>
+                <p>Earth</p>
+            </div>
+        </div>
+        <div class="sun"></div>
+        <div class="circle1 mercury-orbit">
+            <div class="mercury"></div>
+        </div>
+        <div class="circle2 venus-orbit">
+            <div class="venus"></div>
+        </div>
+        <div class="circle3 earth-orbit">
+            <div class="earth"></div>
+            <div class="earth-orbit2">
+                <div class="moon"></div>
+            </div>
+        </div>
+        <div class="circle4 mars-orbit">
+            <div class="mars"></div>
+            <div class="mars-orbit2">
+                <div class="phobos"></div>
+                <div class="demobos"></div>
+            </div>
+        </div>
+        <div class="circle5 jupiter-orbit">
+            <div class="jupiter"></div>
+            <div class="jupiter-orbit4">
+                <div class="callisto"></div>
+            </div>
+            <div class="jupiter-orbit3">
+                <div class="ganymede"></div>
+            </div>
+            <div class="jupiter-orbit1">
+                <div class="io"></div>
+            </div>
+            <div class="jupiter-orbit2">
+                <div class="europa"></div>
+            </div>
+        </div>
+        <div class="circle6 saturn-orbit">
+            <div class="saturn"></div>
+            <div class="ring1"></div>
+            <div class="ring2"></div>
+            <div class="saturn-orbit1">
+                <div class="enceladus"></div>
+            </div>
+            <div class="saturn-orbit2">
+                <div class="tethys"></div>
+            </div>
+            <div class="saturn-orbit3">
+                <div class="titan"></div>
+            </div>
+        </div>
+        <div class="circle7 uranus-orbit">
+            <div class="uranus"></div>
+            <div class="uranus-ring"></div>
+        </div>
+        <div class="circle8 neptune-orbit">
+            <div class="neptune"></div>
+        </div>
+        <!-- Add other elements (planets, orbits, etc.) here -->
+    </div>
+
+    <script>
+        let animationsPaused = false;
+        const animations = document.querySelectorAll('.circle1, .circle2, .circle3, .circle4, .circle5, .circle6, .circle7, .circle8');
+
+        const speedSlider = document.getElementById('speedSlider');
+        const speedDisplay = document.getElementById('speedDisplay');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let speedMultiplier = 1; // Default speed multiplier
+
+        // Update speed when the slider is changed
+        speedSlider.addEventListener('input', function () {
+            speedMultiplier = this.value;
+            speedDisplay.textContent = `${speedMultiplier}x`;
+            updateAnimationSpeed();
+        });
+
+        function updateAnimationSpeed() {
+            animations.forEach(animation => {
+                const originalDuration = parseFloat(animation.style.animationDuration) || parseFloat(getComputedStyle(animation).animationDuration);
+                animation.style.animationDuration = `${originalDuration / speedMultiplier}s`;
+            });
+        }
+
+        pauseBtn.addEventListener('click', function () {
+            if (!animationsPaused) {
+                animations.forEach(animation => {
+                    const computedStyle = window.getComputedStyle(animation);
+                    const duration = computedStyle.getPropertyValue('animation-duration');
+                    animation.dataset.originalDuration = duration; // Store the original duration
+                    animation.style.animationPlayState = 'paused';
+                });
+                animationsPaused = true;
+            }
+        });
+
+        resumeBtn.addEventListener('click', function () {
+            if (animationsPaused) {
+                animations.forEach(animation => {
+                    animation.style.animationPlayState = 'running';
+                });
+                animationsPaused = false;
+            }
+        });
+
+        resetBtn.addEventListener('click', function () {
+            window.location.reload();
+        });
+
+        window.onload = function () {
+            displayTime();
+        };
+
+        // Time Display Function
+        function displayTime() {
+            const currentTime = new Date().getTime();
+            const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+            const elapsedDays = Math.floor(elapsedSeconds / (24 * 60 * 60));
+
+            document.getElementById("timeDisplay").textContent = elapsedDays;
+
+            setTimeout(displayTime, 1000);
+        }
+
+        const startTime = new Date().getTime();
+
+
+
+        function displayTime() {
+            // Get the current time in milliseconds
+            const currentTime = new Date().getTime();
+
+            // Calculate the time elapsed since the page loaded in seconds
+            const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+
+            // Convert elapsed seconds to Earth days
+            const elapsedDays = elapsedSeconds;
+
+            // Format the elapsed time as days, hours, minutes, and seconds
+            const days = Math.floor(elapsedDays);
+            const hours = Math.floor((elapsedDays - days) * 24);
+            const minutes = Math.floor((elapsedDays - days - hours) * 60);
+            const seconds = Math.floor((elapsedDays - days - hours - minutes) * 60);
+
+            // Update the display element with the formatted time
+            document.getElementById("timeDisplay").textContent = `${days} `;
+
+            // Schedule the next update
+            setTimeout(displayTime, 1000); // Update every second
+        }
+
+        // Get the current time when the page loads
+        const startTime2 = new Date().getTime();
+
+        // Initial display on window load
+        window.onload = displayTime;
+        const message = document.getElementById('message');
+
+
+        setTimeout(() => {
+            message.classList.add('visible');
+
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                message.classList.remove('visible');
+            }, 5000);
+        }, 2000);
+
+    </script>
+</body>
+
+</html>
