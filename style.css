@@ -17,13 +17,20 @@
 .write {
     width: fit-content;
     color: white;
+    z-index: 1;
 }
 
 img {
     width: 200px;
     height: 200px;
+    z-index: 1;
 }
-
+.image{
+    transition: all 0.8s linear;
+}
+.image:hover{
+    transform: scale(1.08);
+}
 .content-panel {
     padding-left: 20px;
     width: fit-content;
@@ -34,6 +41,10 @@ img {
     font-family: "Lilita One", sans-serif;
     font-weight: 100;
     font-style: normal;
+    position: absolute;
+    z-index: 2;
+    bottom: 200px;
+
 }
 
 .heading {

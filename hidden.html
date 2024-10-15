@@ -47,13 +47,13 @@
         </div>
     </div>
     <script>
-        let left = document.querySelector(".left")
+        const left = document.querySelector(".left")
         left.style.backgroundColor = "green"
         left.addEventListener("click", () => {
             if (left.style.left === '-150px') {
                 left.style.left = '0';
             } else {
-                left.style.left = '-150px';
+                // left.style.left = '-150px';
             }
         })
     </script>
